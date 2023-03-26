@@ -1,0 +1,68 @@
+Week1
+
+- 정적 컨텐츠
+
+<!DOCTYPE HTML>
+<html>
+<head>
+ <title>static content</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+정적 컨텐츠 입니다.
+</body>
+</html>
+
+- MVC와 템플릿 엔진
+
+MVC: Model, View, Controller
+
+Controller
+
+@Controller
+public class HelloController {
+ @GetMapping("hello-mvc")
+ public String helloMvc(@RequestParam("name") String name, Model model) {
+ model.addAttribute("name", name);
+ return "hello-template";
+ }
+}
+
+View
+
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<p th:text="'hello ' + ${name}">hello! empty</p>
+</body>
+</html>
+
+API
+
+@Controller
+public class HelloController {
+ @GetMapping("hello-string")
+ @ResponseBody
+ public String helloString(@RequestParam("name") String name) {
+ return "hello " + name;
+ }
+}
+
+@Controller
+public class HelloController {
+ @GetMapping("hello-api")
+ @ResponseBody
+ public Hello helloApi(@RequestParam("name") String name) {
+ Hello hello = new Hello();
+ hello.setName(name);
+ return hello;
+ }
+ static class Hello {
+ private String name;
+ public String getName() {
+ return name;
+ }
+ public void setName(String name) {
+ this.name = name;
+ }
+ }
+}
